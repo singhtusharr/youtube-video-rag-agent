@@ -1,0 +1,17 @@
+langchain
+langchain-core
+langchain-community
+langchain-openai
+langchain-huggingface
+sentence-transformers
+youtube-transcript-api
+faiss-cpu
+tiktoken
+python-dotenv
+duckduckgo-search
+ddgs
+fastapi
+uvicorn[standard]
+streamlit
+pydantic
+requests
