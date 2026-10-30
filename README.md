@@ -25,7 +25,7 @@ video URL/id
 [tools.py + agent.py] AgentExecutor picks: retrieve_from_video | summarize_video | web_search
     │
     ▼
-[main.py] FastAPI /ask, /summarize   ──▶   [streamlit_app.py] chat UI
+[main.py] FastAPI /ask, /ask_structured, /summarize   ──▶   [streamlit_app.py] chat UI
 ```
 
 ## Why each piece is there
@@ -81,6 +81,15 @@ Or hit the API directly:
 curl -X POST http://127.0.0.1:8000/ask \
   -H "Content-Type: application/json" \
   -d '{"video": "https://www.youtube.com/watch?v=VIDEO_ID", "question": "What is this video about?"}'
+```
+
+Optional request field `"use_mmr": true` switches retrieval from plain similarity to
+MMR (more diverse chunks); in the Streamlit app it is the sidebar checkbox.
+
+`POST /ask_structured` (same body) skips the agent and returns a validated object
+instead of free text:
+```json
+{"answer": "...", "key_topics": ["..."], "is_grounded": true, "confidence": "high"}
 ```
 
 ## Study notebook

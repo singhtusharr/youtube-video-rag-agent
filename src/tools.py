@@ -22,17 +22,18 @@ web_search.description = (
 )
 
 
-def build_video_tools(session: VideoSession) -> list:
+def build_video_tools(session: VideoSession, use_mmr: bool = False) -> list:
     """Build the retrieval + summarization tools bound to one specific video's
     session (closures capture `session` so the agent doesn't need to re-pass
-    video_id on every tool call)."""
+    video_id on every tool call). `use_mmr` switches the retrieval tool from
+    plain similarity search to MMR (more diverse chunks)."""
 
     @tool
     def retrieve_from_video(question: str) -> str:
         """Answer a question using ONLY the video's transcript content via
-        vector similarity search. Use this for questions about what was
-        actually said/discussed in the video."""
-        return session.ask(question)
+        vector search. Use this for questions about what was actually
+        said/discussed in the video."""
+        return session.ask(question, mmr=use_mmr)
 
     @tool
     def summarize_video(_: str = "") -> str:

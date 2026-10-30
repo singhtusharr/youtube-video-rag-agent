@@ -15,6 +15,7 @@ st.title("🎬 YouTube Video Assistant")
 st.caption("RAG + tool-calling agent over a YouTube video's transcript")
 
 video_input = st.text_input("YouTube URL or video ID", placeholder="https://www.youtube.com/watch?v=...")
+use_mmr = st.sidebar.checkbox("Use MMR retrieval (more diverse chunks)", value=False)
 
 if "history" not in st.session_state:
     st.session_state.history = []
@@ -38,7 +39,7 @@ if question:
                 try:
                     response = requests.post(
                         f"{API_URL}/ask",
-                        json={"video": video_input, "question": question},
+                        json={"video": video_input, "question": question, "use_mmr": use_mmr},
                         timeout=120,
                     )
                     response.raise_for_status()

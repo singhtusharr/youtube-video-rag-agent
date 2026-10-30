@@ -28,8 +28,8 @@ Always prefer retrieve_from_video or summarize_video first. Only fall back to \
 web_search if the video tools don't have the answer. Be concise."""
 
 
-def build_agent_executor(session: VideoSession):
-    tools = build_video_tools(session)
+def build_agent_executor(session: VideoSession, use_mmr: bool = False):
+    tools = build_video_tools(session, use_mmr=use_mmr)
     return create_agent(get_llm(), tools=tools, system_prompt=AGENT_SYSTEM_PROMPT)
 
 
